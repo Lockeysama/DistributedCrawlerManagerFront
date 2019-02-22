@@ -20,6 +20,7 @@ import MonitorEvent from './views/Monitor/MonitorEvent.vue'
 import Wedis from './views/Wedis/Wedis.vue'
 
 const router = new Router({
+  mode: 'hash',
   routes: [
     {path: '/Login', component: Login },
     {path: '/', redirect: '/Home' },
