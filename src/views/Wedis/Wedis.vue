@@ -53,7 +53,7 @@ export default {
   methods: {
     nodeClick(key) {
       console.log(key)
-      this.$http.get('http://127.0.0.1:5001/api/redis/query?key=' + key)
+      this.$http.get('/api/redis/query?key=' + key)
         .then((result) => {
           console.log(result.data)
           this.queryResult = JSON.stringify(result.data, null, 2)
@@ -62,7 +62,7 @@ export default {
         });
     },
     cmdClick(cmd) {
-      this.$http.get('http://127.0.0.1:5001/api/redis/set?cmd=' + cmd)
+      this.$http.get('/api/redis/set?cmd=' + cmd)
         .then((result) => {
           console.log(result.data)
           this.queryResult = JSON.stringify(result.data, null, 2)
@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .wedis-path {
   margin: 20px;
 }
@@ -83,6 +83,10 @@ export default {
   padding: 15px 20px 10px 20px;
   display: block;
   width: auto;
+
+  .el-textarea__inner {
+    color: rgb(40, 139, 231) !important;
+  } 
 }
 
 </style>

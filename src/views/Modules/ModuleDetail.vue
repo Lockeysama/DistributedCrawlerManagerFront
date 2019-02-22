@@ -37,9 +37,10 @@
       </el-table-column>
       <el-table-column
         fixed="right"
-        label="操作"
+        label="Action"
         width="180">
         <template slot-scope="scope">
+          <el-button @click="push(scope.row)" type="text" size="small">Push</el-button>
           <el-button @click="edit(scope.row)" type="text" size="small">Edit</el-button>
           <el-button @click="remove(scope.row)" type="text" size="small" class="module-remove">Remove</el-button>
         </template>
@@ -94,6 +95,24 @@ export default {
       console.log(this.content)
       this.editorMode = true
     },
+    push(row) {
+      const data = {
+        feature: row.s_feature,
+        owner: this.platform
+      }
+      this.$http.post(
+        "/api/modules/push", data
+        )
+        .then(resp => {
+          this.$message({
+            type: 'success',
+            message: 'Push Success!'
+          });
+        })
+        .catch(err => {
+          
+        })
+    },
     bufToHex(buffer) {
       return Array.prototype.map.call(new Uint8Array(buffer), function (x) {
           return ('00' + x.toString(16)).slice(-2)
@@ -111,11 +130,13 @@ export default {
         headers:{'Content-Type': 'multipart/form-data'}
       }; 
       this.$http.post(
-        "http://127.0.0.1:5001/api/modules/upload?platform=" + this.platform, param, config
+        "/api/modules/upload?platform=" + this.platform, param, config
         )
         .then(resp => {
-          this.editTarget = {s_source: ""}
-          this.editorMode = false
+          this.$message({
+            type: 'success',
+            message: 'Upload Success!'
+          });
         })
         .catch(err => {
           
@@ -133,7 +154,7 @@ export default {
           type: 'warning'
         }).then(() => {
           let cmd = "del tddc:worker:config:common:extra_modules:" + this.platform + ":" + row.s_feature
-          this.$http.get('http://127.0.0.1:5001/api/redis/set?cmd=' + cmd)
+          this.$http.get('/api/redis/set?cmd=' + cmd)
             .then((result) => {
               console.log(result.data)
               let index = this.modules.data.indexOf(row)
@@ -142,6 +163,7 @@ export default {
                 type: 'success',
                 message: 'Remove Success!'
               });
+              this.$emit("removeModuleSuccess")
             }).catch((err) => {
               console.log(err) 
             });
@@ -150,12 +172,12 @@ export default {
         });
     },
     editorInit: function () {
-      require('brace/ext/language_tools') //language extension prerequsite...
+      require('brace/ext/language_tools')
       require('brace/mode/html')                
-      require('brace/mode/javascript')    //language
+      require('brace/mode/javascript')
       require('brace/mode/less')
       require('brace/theme/chrome')
-      require('brace/snippets/javascript') //snippet
+      require('brace/snippets/javascript')
     }
   }
 }

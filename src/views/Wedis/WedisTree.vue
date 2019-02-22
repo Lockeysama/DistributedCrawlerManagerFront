@@ -52,7 +52,7 @@ export default {
   methods: {
     loadNode(node, resolve) {
       if (node.level === 0) {
-        this.$http.get('http://127.0.0.1:5001/api/redis/next_path_query?prefix=tddc')
+        this.$http.get('/api/redis/next_path_query?prefix=tddc')
           .then((result) => {
             console.log(result.data)
             return resolve(result.data);
@@ -63,7 +63,7 @@ export default {
         return resolve([])
       }
       console.log(node.node)
-      this.$http.get('http://127.0.0.1:5001/api/redis/next_path_query?prefix=' + node.data.path)
+      this.$http.get('/api/redis/next_path_query?prefix=' + node.data.path)
         .then((result) => {
           console.log(result.data)
           return resolve(result.data);
@@ -76,9 +76,9 @@ export default {
       if (!value) return true;
       return data.node.indexOf(value) !== -1;
     },
-
     remove(node, data) {
-      this.$confirm("This option will remove key pattern \"" + data.path + "*\"!", 'Tips', {
+      const suffix = !node.data.leaf ? ":*" : ""
+      this.$confirm("This option will remove key pattern \"" + data.path + suffix + "\"!", 'Tips', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
           type: 'warning'
@@ -91,7 +91,8 @@ export default {
           const children = parent.childNodes || parent.data;
           const index = children.findIndex(d => d.data.$treeNodeId === data.$treeNodeId);
           children.splice(index, 1);
-          this.$emit("cmdClick", "clean " + data.path + '*')
+          const cmd = !node.data.leaf ? "clean " : "del "
+          this.$emit("cmdClick", cmd  + data.path + suffix)
         }).catch(() => {
           
         });

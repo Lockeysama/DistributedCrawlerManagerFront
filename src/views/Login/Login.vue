@@ -1,16 +1,15 @@
 <template>
   <div class="login-tmp">
     <div>
-      <img src="../../assets/virus.png" alt="" style="z-index: 9999; position: relative">
+      <img src="../../assets/virus.png"  alt width="150px"
+        style="z-index: 9999; position: relative; transform: rotate(150deg); margin-left: -35%; margin-bottom: -10px;">
     </div>
     <el-row>
-      <el-col :span="8"><p></p></el-col>
       <el-col :span="8">
-        <el-form 
-          :model="login_form" 
-          status-icon 
-          ref="login_form"
-          class="login-form">
+        <p></p>
+      </el-col>
+      <el-col :span="8">
+        <el-form :model="login_form" status-icon ref="login_form" class="login-form">
           <el-form-item label="UserName" prop="pass">
             <el-input autocomplete="off" v-model="login_form.user_name"></el-input>
           </el-form-item>
@@ -18,7 +17,7 @@
             <el-input type="password" v-model="login_form.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submit" >Login</el-button>
+            <el-button type="primary" @click="submit">Login</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -35,27 +34,28 @@ export default {
         user_name: "",
         password: ""
       }
-    }
+    };
   },
   methods: {
     submit() {
       let params = {
-        'username': this.login_form.user_name,
-        'password': this.login_form.password
+        username: this.login_form.user_name,
+        password: this.login_form.password
       };
-      this.$store.dispatch('Login', params)
+      this.$store
+        .dispatch("Login", params)
         .then(() => {
-          this.$router.push(
-            {path: this.$route.query.redirect ? this.$route.query.redirect : '/'}
-          );
-          console.log(this.$route.query.redirect)
+          this.$router.push({
+            path: this.$route.query.redirect ? this.$route.query.redirect : "/"
+          });
+          console.log(this.$route.query.redirect);
         })
-        .catch((error) => {
-          console.log(error.response); 
+        .catch(error => {
+          console.log(error.response);
         });
-   }
+    }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

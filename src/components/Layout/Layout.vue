@@ -9,7 +9,7 @@
       <el-col :span="19">
         <div class="grid-content bg-purple-light">
           <el-container>
-            <el-header><t-d-header></t-d-header></el-header>
+            <el-header><nav-header></nav-header></el-header>
           </el-container>
         </div>
       </el-col>
@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import TDHeader from './TDHeader.vue'
+import NavHeader from './NavHeader.vue'
 
 export default {
   name: 'app',
   components: {
-    TDHeader
+    NavHeader
   },
   methods: {
     logout() {

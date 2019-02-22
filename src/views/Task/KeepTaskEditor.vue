@@ -71,7 +71,7 @@ export default {
     submitForm(task) {
       this.$refs["task"].validate((valid) => {
         if (valid) {
-          this.$http.post('http://127.0.0.1:5001/api/task_pad/edit', this.task)
+          this.$http.post('/api/task_pad/edit', this.task)
             .then(resp => {
               this.$emit("editDone")
               console.log(resp.data)

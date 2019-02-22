@@ -47,18 +47,11 @@
           <el-radio label="Promptly"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="Start Time" size="small" required>
-        <el-col :span="11">
-          <el-form-item prop="s_start_date" size="small">
-            <el-date-picker type="date" placeholder="Date" v-model="task.s_start_date" style="width: 100%;"></el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-form-item prop="s_start_time" size="small">
-            <el-time-picker type="fixed-time" placeholder="Time" v-model="task.s_start_time" style="width: 100%;"></el-time-picker>
-          </el-form-item>
-        </el-col>
+      <el-form-item label="Start Time" size="small" v-show="task.s_timer === 'Time to start'">
+        <el-date-picker 
+          style="display: block"
+          v-model="task.s_start_date" type="datetime" placeholder="Select Datetime">
+        </el-date-picker>
       </el-form-item>
       <el-form-item label="Interval" prop="i_space" size="small" required>
         <el-input v-model="task.i_space"></el-input>
@@ -145,14 +138,6 @@ export default {
             { required: true, message: 'Please input URL', trigger: 'blur' },
             { min: 10, message: 'Please enter a valid URL address', trigger: 'blur' }
           ],
-          s_start_date: [
-            { required: true, message: 'Please select start date', trigger: 'blur' },
-            { type: 'date', required: true, message: 'Please select a date', trigger: 'change' }
-          ],
-          s_start_time: [
-            { required: true, message: 'Please select start time', trigger: 'blur' },
-            { type: 'date', required: true, message: 'Please select a time', trigger: 'change' }
-          ],
           i_interval: [
             { required: true, message: 'Please input interval', trigger: 'blur' },
             { type: 'number', message: 'Time interval must be a numeric value'}
@@ -164,13 +149,14 @@ export default {
     submitForm(task) {
       this.$refs["task"].validate((valid) => {
         if (valid) {
-          this.$http.post('http://127.0.0.1:5001/api/task/edit', this.task)
+          this.$http.post('/api/task/edit', this.task)
             .then(resp => {
               console.log(resp.data)
               this.$message({
                 message: 'Edit Success.',
                 type: 'success'
               });
+              this.$emit("editSuccess")
             })
             .catch(err => {
               console.log(err)
@@ -214,7 +200,7 @@ export default {
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          this.$http.get('http://127.0.0.1:5001/api/task/delete?feature=' + this.task.s_feature)
+          this.$http.get('/api/task/delete?feature=' + this.task.s_feature)
             .then(resp => {
               console.log(resp.data)
               this.$message({
@@ -222,6 +208,7 @@ export default {
                 type: 'success'
               });
               this.$emit("removeTask", this.task)
+              this.$emit("removeSuccess")
             })
             .catch(err => {
               console.log(err)

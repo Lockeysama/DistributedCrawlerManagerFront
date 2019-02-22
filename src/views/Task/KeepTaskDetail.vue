@@ -80,6 +80,7 @@ export default {
   methods: {
     editDone() {
       this.$emit("edit", false)
+      this.$emit("editSuccess")
     },
     edit(row) {
       console.log(row)
@@ -99,7 +100,7 @@ export default {
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          this.$http.get("http://127.0.0.1:5001/api/task_pad/delete?owner=" + row.s_owner + "&feature=" + row.s_feature)
+          this.$http.get("/api/task_pad/delete?owner=" + row.s_owner + "&feature=" + row.s_feature)
             .then((result) => {
               console.log(result.data)
               let index = this.tasks.data.indexOf(row)
@@ -108,6 +109,7 @@ export default {
                 type: 'success',
                 message: 'Remove Success!'
               });
+              this.$emit("removeSuccess")
             }).catch((err) => {
               console.log(err) 
             });

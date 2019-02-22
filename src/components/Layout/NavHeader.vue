@@ -5,6 +5,7 @@
       mode="horizontal" 
       @select="handleSelect">
       <el-menu-item index="/Home">Home</el-menu-item>
+      <el-menu-item index="/Workers">Workers</el-menu-item>
       <el-menu-item index="/Configuration">Configuration</el-menu-item>
       <el-submenu index="/Modules">
         <template slot="title">Mudules</template>

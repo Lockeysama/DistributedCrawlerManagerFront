@@ -2,33 +2,30 @@
   <div id="configuration-container">
     <el-row>
       <el-col :span="5">
-        <sider :layout="siderLayout" :items="siderItems" @siderSelect="siderSelect"></sider>
+        <left-sider 
+          :layout="siderLayout" :items="siderItems" 
+          @siderSelect="siderSelect">
+        </left-sider>
       </el-col>
       <el-col :span="19">
         <keep-task-detail 
           :tasks="selectItemTasks" 
           :platform="platform"
           :editMode="editMode"
-          @edit="edit"></keep-task-detail>
+          @edit="edit"
+          @editSuccess="getList" @removeSuccess="getList"></keep-task-detail>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import Sider from '../../components/Sider/Sider.vue'
+import LeftSider from '../../components/Layout/LeftSider.vue'
 import KeepTaskDetail from './KeepTaskDetail.vue'
 
 export default {
   mounted() {
-    this.$http.get("http://127.0.0.1:5001/api/keep_task/list")
-      .then((result) => {
-        console.log(result.data)
-        this.siderItems = result.data.data
-      }).catch((err) => {
-        console.log(err)
-
-      });
+    this.getList()
   },
   data() {
     return {
@@ -40,9 +37,19 @@ export default {
     }
   },
   components: {
-    Sider, KeepTaskDetail
+    LeftSider, KeepTaskDetail
   },
   methods: {
+    getList() {
+      this.$http.get("/api/keep_task/list")
+        .then((result) => {
+          console.log(result.data)
+          this.siderItems = result.data.data
+        }).catch((err) => {
+          console.log(err)
+
+        });
+    },
     edit(isEdit) {
       this.editMode = isEdit
     },
@@ -54,7 +61,7 @@ export default {
         field = indexPath[1]
       }
       this.$http.get(
-        "http://127.0.0.1:5001/api/keep_task/detail?platform=wscrawler&market=" + field
+        "/api/keep_task/detail?platform=wscrawler&market=" + field
         )
         .then((result) => {
           this.selectItemTasks = {platform: this.platform, field, data: result.data.data}

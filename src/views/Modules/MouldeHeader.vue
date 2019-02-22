@@ -13,7 +13,9 @@
               :action="url"
               multiple
               list-type="text"
-              :before-upload="beforeAvatarUpload">
+              :before-upload="beforeAvatarUpload"
+              :on-success="onSuccess"
+              :headers="{Authorization: this.$store.state.token}">
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">Drag files on there, or click <em>Upload</em>.</div>
               <div class="el-upload__tip" slot="tip">Upload avatar file can only be "py" format.</div>
@@ -44,7 +46,7 @@ export default {
   },
   computed: {
     url() {
-      return "http://127.0.0.1:5001/api/modules/upload?platform=" + this.platform
+      return "/api/modules/upload?platform=" + this.platform
     }
   },
   methods: {
@@ -54,6 +56,10 @@ export default {
         this.$message.error('Upload avatar file can only be "py" format!');
       }
       return isPy
+    },
+    onSuccess() {
+      console.log('Upload Success!')
+      this.$emit("uploadSuccess")
     }
   }
 }

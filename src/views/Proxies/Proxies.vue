@@ -2,31 +2,31 @@
   <div id="configuration-container">
     <el-row>
       <el-col :span="5">
-        <sider :layout="siderLayout" :items="siderItems" @siderSelect="siderSelect"></sider>
+        <left-sider 
+          :layout="siderLayout" :items="siderItems" 
+          @siderSelect="siderSelect">
+        </left-sider>
       </el-col>
       <el-col :span="19">
-        <proxies-editor :task="selectItem" @removeTask="removeTask"></proxies-editor>
+        <proxies-editor 
+          :task="selectItem" @removeTask="removeTask"
+          @editSuccess="getList" @removeSuccess="getList">
+        </proxies-editor>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import Sider from '../../components/Sider/Sider.vue'
+import LeftSider from '../../components/Layout/LeftSider.vue'
 import ProxiesEditor from './ProxiesEditor.vue'
 
 export default {
   components: {
-    Sider, ProxiesEditor
+    LeftSider, ProxiesEditor
   },
   mounted() {
-    this.$http.get("http://127.0.0.1:5001/api/proxies/list")
-      .then((result) => {
-        this.siderItems = result.data.data
-      }).catch((err) => {
-        console.log(err)
-
-      });
+    this.getList()
   },
   data() {
     return {
@@ -41,6 +41,15 @@ export default {
     }
   },
   methods: {
+    getList() {
+      this.$http.get("/api/proxies/list")
+        .then((result) => {
+          this.siderItems = result.data.data
+        }).catch((err) => {
+          console.log(err)
+
+        });
+    },
     siderSelect(indexPath) {
       let field = ''
       if (this.siderLayout === 3) {
@@ -49,7 +58,7 @@ export default {
         field = indexPath[1]
       }
       this.$http.get(
-        "http://127.0.0.1:5001/api/proxies/detail?feature=" + field
+        "/api/proxies/detail?feature=" + field
         )
         .then((result) => {
           this.selectItem = result.data.data

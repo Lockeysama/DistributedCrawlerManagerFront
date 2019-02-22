@@ -6,6 +6,7 @@ Vue.use(Router)
 import Login from './views/Login/Login.vue'
 import Layout from './components/Layout/Layout.vue'
 import Home from './views/Home/Home.vue'
+import Workers from './views/Workers/Workers.vue'
 import Configuration from './views/Configuration/Configuration.vue'
 import ModulesCrawler from './views/Modules/ModulesCrawler.vue'
 import ModulesWSCrawler from './views/Modules/ModulesWSCrawler.vue'
@@ -27,6 +28,13 @@ const router = new Router({
       component: Layout, 
       children: [
         {path: '/Home', component: Home, meta: {requireAuth: true}}
+      ]
+    },
+    {
+      path: '/Workers', 
+      component: Layout, 
+      children: [
+        {path: '/Workers', component: Workers, meta: {requireAuth: true}}
       ]
     },
     {

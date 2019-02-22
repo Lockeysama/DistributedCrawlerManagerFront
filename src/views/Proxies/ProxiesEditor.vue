@@ -108,13 +108,14 @@ export default {
     submitForm(task) {
       this.$refs["task"].validate((valid) => {
         if (valid) {
-          this.$http.post('http://127.0.0.1:5001/api/proxies/edit', this.task)
+          this.$http.post('/api/proxies/edit', this.task)
             .then(resp => {
               console.log(resp.data)
               this.$message({
                 message: 'Edit Success.',
                 type: 'success'
               });
+              this.$emit("editSuccess")
             })
             .catch(err => {
               console.log(err)
@@ -157,7 +158,7 @@ export default {
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          this.$http.get('http://127.0.0.1:5001/api/proxies/delete?feature=' + this.task.s_feature)
+          this.$http.get('/api/proxies/delete?feature=' + this.task.s_feature)
             .then(resp => {
               console.log(resp.data)
               this.$message({
@@ -165,6 +166,7 @@ export default {
                 type: 'success'
               });
               this.$emit("removeTask", this.task)
+              this.$emit("removeSuccess")
             })
             .catch(err => {
               console.log(err)

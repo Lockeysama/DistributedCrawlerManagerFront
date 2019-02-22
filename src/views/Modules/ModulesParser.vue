@@ -2,15 +2,21 @@
   <div id="configuration-container">
     <el-row>
       <el-col :span="24">
-        <mould-header :platform="platform"></mould-header>
+        <mould-header :platform="platform" @uploadSuccess="uploadSuccess"></mould-header>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="5">
-        <sider :layout="siderLayout" :items="siderItems" @siderSelect="siderSelect"></sider>
+        <left-sider 
+          :layout="siderLayout" :items="siderItems" 
+          @siderSelect="siderSelect">
+        </left-sider>
       </el-col>
       <el-col :span="19">
-        <module-detail :modules="selectItemModules" :platform="platform"></module-detail>
+        <module-detail 
+          :modules="selectItemModules" :platform="platform"
+          @removeModuleSuccess="removeModuleSuccess">
+        </module-detail>
       </el-col>
     </el-row>
   </div>
@@ -18,19 +24,12 @@
 
 <script>
 import MouldHeader from './MouldeHeader.vue'
-import Sider from '../../components/Sider/Sider.vue'
+import LeftSider from '../../components/Layout/LeftSider.vue'
 import ModuleDetail from './ModuleDetail.vue'
 
 export default {
   mounted() {
-    this.$http.get("http://127.0.0.1:5001/api/modules/list?platform=parser")
-      .then((result) => {
-        console.log(result.data)
-        this.siderItems = result.data.data
-      }).catch((err) => {
-        console.log(err)
-
-      });
+    this.getList()
   },
   data() {
     return {
@@ -41,11 +40,20 @@ export default {
     }
   },
   components: {
-    MouldHeader, Sider, ModuleDetail
+    MouldHeader, LeftSider, ModuleDetail
   },
   methods: {
+    getList() {
+      this.$http.get("/api/modules/list?platform=" + this.platform)
+        .then((result) => {
+          console.log(result.data)
+          this.siderItems = result.data.data
+        }).catch((err) => {
+          console.log(err)
+
+        });
+    },
     siderSelect(indexPath) {
-      let key = "tddc:task:config:"
       let field = ''
       if (this.siderLayout === 3) {
         field = indexPath.slice(1, 3).join(":")
@@ -53,7 +61,7 @@ export default {
         field = indexPath[1]
       }
       this.$http.get(
-        "http://127.0.0.1:5001/api/modules/detail?platform=" + this.platform + "&market=" + field
+        "/api/modules/detail?platform=" + this.platform + "&market=" + field
         )
         .then((result) => {
           this.selectItemModules = {platform: this.platform, field, data: result.data.data}
@@ -61,6 +69,14 @@ export default {
         }).catch((err) => {
           console.log(err)
         });
+    },
+    uploadSuccess() {
+      console.log('Reflash Modules List')
+      this.getList()
+    },
+    removeModuleSuccess() {
+      console.log('Reflash Modules List')
+      this.getList()
     }
   }
 }
