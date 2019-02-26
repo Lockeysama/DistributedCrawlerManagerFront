@@ -3,7 +3,6 @@ import App from './App.vue'
 import store from './plugins/vuex.js'
 import router from './router.js'
 import './plugins/element.js'
-import './plugins/echarts.js'
 import moment from 'vue-moment'
 
 

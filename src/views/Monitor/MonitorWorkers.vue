@@ -3,7 +3,6 @@
     <el-row>
       <el-col :span="5">
         <div class="grid-content bg-purple">
-          <!-- <t-d-side></t-d-side> -->
         </div>
       </el-col>
       <el-col :span="19">
@@ -21,7 +20,9 @@
 </template>
 
 <script>
-// import TDSide from '../components/Configuration/TDSider.vue'
+var echarts = require('echarts/lib/echarts')
+require('echarts/lib/chart/bar')
+require('echarts/lib/chart/line')
 
 export default {
   mounted() {
@@ -30,7 +31,7 @@ export default {
   },
   methods: {
     initBar() {
-      let bar = this.$echarts.init(this.$refs.bar);
+      let bar = echarts.init(this.$refs.bar);
       console.log(bar);
       bar.setOption({
         title: {
@@ -49,7 +50,7 @@ export default {
       }); 
     },
     initLine() {
-      let line = this.$echarts.init(this.$refs.line);
+      let line = echarts.init(this.$refs.line);
       
       line.setOption({
         title: {

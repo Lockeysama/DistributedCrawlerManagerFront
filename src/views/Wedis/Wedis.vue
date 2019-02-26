@@ -1,15 +1,6 @@
 <template>
   <div id="configuration-container">
     <el-row>
-      <el-col :span="24">
-        <el-breadcrumb separator-class="el-icon-arrow-right" class="wedis-path">
-          <el-breadcrumb-item >Crawler</el-breadcrumb-item>
-          <el-breadcrumb-item>127.0.0.1</el-breadcrumb-item>
-          <el-breadcrumb-item>dc1c1</el-breadcrumb-item>
-        </el-breadcrumb>
-      </el-col>
-    </el-row>
-    <el-row>
       <el-col :span="5">
         <wedis-tree @nodeClick="nodeClick" @cmdClick="cmdClick"></wedis-tree>
       </el-col>

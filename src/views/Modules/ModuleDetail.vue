@@ -58,7 +58,7 @@
       </el-row>
       <aceeditor
         v-model="editTarget.s_source" @init="editorInit" 
-        lang="html" theme="chrome" 
+        lang="python" theme="chrome" 
         width="100%" height="1500">
       </aceeditor>
     </div>
@@ -66,11 +66,9 @@
 </template>
 
 <script>
-import aceeditor from 'vue2-ace-editor'
-
 export default {
   components: {
-    aceeditor
+    aceeditor: require('vue2-ace-editor')
   },
   props: {
     modules: {
@@ -173,11 +171,8 @@ export default {
     },
     editorInit: function () {
       require('brace/ext/language_tools')
-      require('brace/mode/html')                
-      require('brace/mode/javascript')
-      require('brace/mode/less')
+      require('brace/mode/python')
       require('brace/theme/chrome')
-      require('brace/snippets/javascript')
     }
   }
 }
