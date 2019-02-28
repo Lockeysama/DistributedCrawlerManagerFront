@@ -38,8 +38,10 @@
       <el-table-column
         fixed="right"
         label="操作"
-        width="180">
+        width="280">
         <template slot-scope="scope">
+          <el-button @click="start(scope.row)" type="text" size="small" class="module-start">Start</el-button>
+          <el-button @click="stop(scope.row)" type="text" size="small" class="module-stop">Stop</el-button>
           <el-button @click="edit(scope.row)" type="text" size="small">Edit</el-button>
           <el-button @click="remove(scope.row)" type="text" size="small" class="module-remove">Remove</el-button>
         </template>
@@ -93,6 +95,36 @@ export default {
     cancelEdit() {
       this.$emit("edit", false)
     },
+    start(row) {
+      const data = {
+        owner: row.s_owner,
+        feature: row.s_feature
+      }
+      this.$http.post("/api/task_pad/start_ws_task", data)
+        .then((result) => {
+          this.$message({
+            type: 'success',
+            message: 'Start Success!'
+          });
+        }).catch((err) => {
+          console.log(err) 
+        });
+    },
+    stop(row) {
+      const data = {
+        owner: row.s_owner,
+        feature: row.s_feature
+      }
+      this.$http.post("/api/task_pad/stop_ws_task", data)
+        .then((result) => {
+          this.$message({
+            type: 'success',
+            message: 'Stop Success!'
+          });
+        }).catch((err) => {
+          console.log(err) 
+        });
+    },
     remove(row) {
       console.log(row)
       this.$confirm('This will permanently delete the task, whether or not to continue?', 'Tips', {
@@ -128,6 +160,14 @@ export default {
 
   .el-icon-warning {
     color: #f9cc9d;
+  }
+
+  .module-start {
+    color: #32d08d;
+  }
+
+  .module-stop {
+    color: #fabf40;
   }
 
   .module-remove {
