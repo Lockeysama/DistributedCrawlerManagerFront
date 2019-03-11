@@ -9,7 +9,7 @@ import Home from './views/Home/Home.vue'
 import Workers from './views/Workers/Workers.vue'
 import Configuration from './views/Configuration/Configuration.vue'
 import ModulesCrawler from './views/Modules/ModulesCrawler.vue'
-import ModulesWSCrawler from './views/Modules/ModulesWSCrawler.vue'
+import ModulesKeepCrawler from './views/Modules/ModulesKeepCrawler.vue'
 import ModulesParser from './views/Modules/ModulesParser.vue'
 import TaskTiming from './views/Task/TaskTiming.vue'
 import TaskKeep from './views/Task/TaskKeep.vue'
@@ -53,10 +53,10 @@ const router = new Router({
       ]
     },
     {
-      path: '/Modules/WSCrawler', 
+      path: '/Modules/KeepCrawler', 
       component: Layout, 
       children: [
-        {path: '/Modules/WSCrawler', component: ModulesWSCrawler, meta: {requireAuth: true}}
+        {path: '/Modules/KeepCrawler', component: ModulesKeepCrawler, meta: {requireAuth: true}}
       ]
     },
     {

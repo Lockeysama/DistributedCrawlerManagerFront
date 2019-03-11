@@ -12,6 +12,7 @@
           :tasks="selectItemTasks" 
           :platform="platform"
           :editMode="editMode"
+          :editTarget="editTarget"
           @edit="edit"
           @editSuccess="getList" @removeSuccess="getList"></keep-task-detail>
       </el-col>
@@ -29,11 +30,19 @@ export default {
   },
   data() {
     return {
-      platform: "crawler",
+      platform: "keepcrawler",
       siderLayout: 2,
       siderItems: {},
       selectItemTasks: {},
-      editMode: false
+      editMode: false,
+      editTarget: {
+        "s_owner": "",
+        "s_platform": "",
+        "s_id": "-1",
+        "s_feature": "",
+        "b_valid": false,
+        "i_state": 0
+      }
     }
   },
   components: {
@@ -44,7 +53,11 @@ export default {
       this.$http.get("/api/keep_task/list")
         .then((result) => {
           console.log(result.data)
-          this.siderItems = result.data.data
+          if (result.data.code === -3001) {
+            this.editMode = true
+          } else {
+            this.siderItems = result.data.data
+          }
         }).catch((err) => {
           console.log(err)
 
@@ -61,7 +74,7 @@ export default {
         field = indexPath[1]
       }
       this.$http.get(
-        "/api/keep_task/detail?platform=wscrawler&market=" + field
+        "/api/keep_task/detail?platform=keepcrawler&market=" + field
         )
         .then((result) => {
           this.selectItemTasks = {platform: this.platform, field, data: result.data.data}

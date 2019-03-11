@@ -6,7 +6,7 @@
       <p><span style="font-weight:bold">Crawler: 8</span></p>&nbsp;&nbsp;&nbsp;&nbsp;
       <p><span style="font-weight:bold">Parser: 6</span></p>&nbsp;&nbsp;&nbsp;&nbsp;
       <p><span style="font-weight:bold">Proxies: 5</span></p>&nbsp;&nbsp;&nbsp;&nbsp;
-      <p><span style="font-weight:bold">WSCrawler: 9</span></p>
+      <p><span style="font-weight:bold">KeepCrawler: 9</span></p>
     </div>
     <br>
     <div id="cluster-list">
@@ -63,7 +63,7 @@ export default {
           date: '2016-05-04 13:14:52',
           type: 'Parser',
           name: 'p1',
-          services: ['Crawler', 'Parser', 'WSCrawler', 'Manager', 'KLineAgg'],
+          services: ['Crawler', 'Parser', 'KeepCrawler', 'Manager', 'KLineAgg'],
           host: 'public-1.cluster-cvt1rggskuer.ap-northeast-1.rds.amazonaws.com',
           running: false
         }, {

@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      platform: "parser",
+      platform: "timingparser",
       siderLayout: 2,
       siderItems: {},
       selectItemModules: {}

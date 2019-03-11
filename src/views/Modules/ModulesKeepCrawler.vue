@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      platform: "wscrawler",
+      platform: "keepcrawler",
       siderLayout: 2,
       siderItems: {},
       selectItemModules: {}

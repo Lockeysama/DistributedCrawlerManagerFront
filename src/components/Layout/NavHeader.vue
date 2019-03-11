@@ -10,7 +10,7 @@
       <el-submenu index="/Modules">
         <template slot="title">Mudules</template>
           <el-menu-item index="/Modules/Crawler">Crawler</el-menu-item>
-          <el-menu-item index="/Modules/WSCrawler">WSCrawler</el-menu-item>
+          <el-menu-item index="/Modules/KeepCrawler">KeepCrawler</el-menu-item>
           <el-menu-item index="/Modules/Parser">Parser</el-menu-item>
       </el-submenu>
       <el-submenu index="/Task">

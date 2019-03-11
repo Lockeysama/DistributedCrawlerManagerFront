@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      platform: "crawler",
+      platform: "timingcrawler",
       siderLayout: 2,
       siderItems: {},
       selectItemModules: {}
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     getList() {
-      this.$http.get("/api/modules/list?platform=crawler")
+      this.$http.get("/api/modules/list?platform=timingcrawler")
         .then((result) => {
           console.log(result.data)
           this.siderItems = result.data.data

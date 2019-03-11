@@ -59,7 +59,7 @@ export default {
         }, {
           date: '2016-05-04 13:14:52',
           name: 'dc3',
-          services: ['Crawler', 'Parser', 'WSCrawler', 'Manager', 'KLineAgg'],
+          services: ['Crawler', 'Parser', 'KeepCrawler', 'Manager', 'KLineAgg'],
           host: 'public-1.cluster-cvt1rggskuer.ap-northeast-1.rds.amazonaws.com',
           running: false
         }, {

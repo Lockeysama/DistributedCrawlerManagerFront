@@ -72,11 +72,15 @@ export default {
     editMode: {
       type: Boolean,
       default: false
+    },
+    editTarget: {
+      type: Object,
+      default() {return {}}
     }
   },
   data() {
     return {
-      editTarget: {s_source: ""}
+      
     }
   },
   methods: {
@@ -97,7 +101,7 @@ export default {
     },
     start(row) {
       const data = {
-        owner: row.s_owner,
+        platform: this.platform,
         feature: row.s_feature
       }
       this.$http.post("/api/task_pad/start_ws_task", data)
@@ -112,7 +116,7 @@ export default {
     },
     stop(row) {
       const data = {
-        owner: row.s_owner,
+        platform: this.platform,
         feature: row.s_feature
       }
       this.$http.post("/api/task_pad/stop_ws_task", data)
