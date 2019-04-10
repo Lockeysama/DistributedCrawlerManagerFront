@@ -9,9 +9,9 @@
       <el-menu-item index="/Configuration">Configuration</el-menu-item>
       <el-submenu index="/Modules">
         <template slot="title">Mudules</template>
-          <el-menu-item index="/Modules/Crawler">Crawler</el-menu-item>
+          <el-menu-item index="/Modules/Crawler">TimingCrawler</el-menu-item>
           <el-menu-item index="/Modules/KeepCrawler">KeepCrawler</el-menu-item>
-          <el-menu-item index="/Modules/Parser">Parser</el-menu-item>
+          <el-menu-item index="/Modules/Parser">TimingParser</el-menu-item>
       </el-submenu>
       <el-submenu index="/Task">
         <template slot="title">Task</template>
